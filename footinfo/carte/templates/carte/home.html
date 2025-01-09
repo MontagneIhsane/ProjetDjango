@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Joueurs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        img {
+            max-width: 100px;
+            height: auto;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Liste des Joueurs</h1>
+
+    <!-- Table des joueurs -->
+    <table>
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Nom</th>
+                <th>Image</th>
+                <th>Date de Naissance</th>
+                <th>Poste</th>
+                <th>Équipe</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for joueur in joueurs %}
+            <tr>
+                <td>{{ joueur.titre }}</td>
+                <td>{{ joueur.nom }}</td>
+                <td>
+                    {% if joueur.image %}
+                        <img src="{{ joueur.image.url }}" alt="Image de {{ joueur.nom }}">
+                    {% else %}
+                        <p>Aucune image</p>
+                    {% endif %}
+                </td>
+                <td>{{ joueur.date_naissance }}</td>
+                <td>{{ joueur.poste }}</td>
+                <td>{{ joueur.equipe }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">Aucun joueur trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Bouton pour ajouter un joueur -->
+    <a href="{% url 'admin:carte_carte_add' %}" class="btn">Ajouter un joueur</a>
+</div>
+
+</body>
+</html>
