@@ -126,17 +126,16 @@ td img {
             <thead>
                 <tr>
                     <th>Nom</th>
+                    <th>Image</th>
+                    <th>Date de Naissance</th>
                     <th>Poste</th>
                     <th>Équipe</th>
-                    <th>Image</th>
                 </tr>
             </thead>
             <tbody>
                 {% for joueur in joueurs %}
                 <tr>
                     <td>{{ joueur.nom }}</td>
-                    <td>{{ joueur.poste }}</td>
-                    <td>{{ joueur.equipe }}</td>
                     <td>
                         {% if joueur.image %}
                         <img src="{{ joueur.image.url }}" alt="Image de {{ joueur.nom }}">
@@ -144,6 +143,9 @@ td img {
                         <p>Aucune image</p>
                         {% endif %}
                     </td>
+                    <td>{{ joueur.date_naissance }}</td>
+                    <td>{{ joueur.poste }}</td>
+                    <td>{{ joueur.equipe }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -152,7 +154,6 @@ td img {
         <p class="no-results">Aucun résultat trouvé pour votre recherche.</p>
         {% endif %}
 
-        <!-- Lien pour revenir à l'accueil -->
         <a href="{% url 'liste_joueurs' %}" class="back-home">Revenir à la liste complète</a>
     </div>
 </body>

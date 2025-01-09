@@ -127,7 +127,20 @@
                 <button type="submit">Rechercher</button>
             </form>
         </div>
-        <a href="{% url 'register' %}">Register</a>
+        <div class="top-right">
+            {% if user.is_authenticated %}
+                <p>Bonjour, {{ user.username }}</p>
+                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background: none; border: none; color: blue; text-decoration: underline; cursor: pointer;">
+                        Se déconnecter
+                    </button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn">Se connecter</a>
+                <a href="{% url 'register' %}" class="btn">S'inscrire</a>
+            {% endif %}
+        </div>
     </div>
 
     <!-- Contenu principal -->
@@ -145,23 +158,19 @@
             </thead>
             <tbody>
                 {% for joueur in joueurs %}
-                <tr>
-                    <td>{{ joueur.nom }}</td>
-                    <td>
-                        {% if joueur.image %}
-                            <img src="{{ joueur.image.url }}" alt="Image de {{ joueur.nom }}">
-                        {% else %}
-                            <p>Aucune image</p>
-                        {% endif %}
-                    </td>
-                    <td>{{ joueur.date_naissance }}</td>
-                    <td>{{ joueur.poste }}</td>
-                    <td>{{ joueur.equipe }}</td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="6">Aucun joueur trouvé.</td>
-                </tr>
+                    <tr>
+                        <td>{{ joueur.nom }}</td>
+                        <td>
+                            {% if joueur.image %}
+                                <img src="{{ joueur.image.url }}" alt="Image de {{ joueur.nom }}">
+                            {% else %}
+                                <p>Aucune image</p>
+                            {% endif %}
+                        </td>
+                        <td>{{ joueur.date_naissance }}</td>
+                        <td>{{ joueur.poste }}</td>
+                        <td>{{ joueur.equipe }}</td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
