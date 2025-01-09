@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats de la recherche</title>
+    <style>
+        /* Style de base pour le corps */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9; /* Arrière-plan doux */
+    margin: 0;
+    padding: 0;
+    color: #333; /* Texte sombre pour le contraste */
+}
+
+/* Conteneur principal */
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff; /* Fond blanc */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre douce */
+}
+
+/* Titre de la page */
+h1 {
+    text-align: center;
+    color: #4CAF50; /* Vert doux */
+    margin-bottom: 20px;
+}
+
+/* Style du formulaire de recherche */
+form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+form input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px 0 0 5px;
+    font-size: 16px;
+}
+
+form input[type="submit"] {
+    background-color: #4CAF50; /* Bouton vert */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Table des résultats */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #4CAF50; /* Couleur de l'en-tête */
+    color: white;
+}
+
+td img {
+    max-width: 100px;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* Message si aucun résultat n'est trouvé */
+.no-results {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    margin-top: 20px;
+}
+
+/* Lien pour revenir à l'accueil */
+.back-home {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #4CAF50;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.back-home:hover {
+    color: #45a049;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Résultats de Recherche</h1>
+
+        <!-- Formulaire de recherche -->
+        <form method="GET" action="{% url 'search_joueurs' %}">
+            <input type="text" name="q" placeholder="Recherchez un joueur..." value="{{ query }}">
+            <input type="submit" value="Rechercher">
+        </form>
+
+        <!-- Affichage des résultats -->
+        {% if joueurs %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Poste</th>
+                    <th>Équipe</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for joueur in joueurs %}
+                <tr>
+                    <td>{{ joueur.nom }}</td>
+                    <td>{{ joueur.poste }}</td>
+                    <td>{{ joueur.equipe }}</td>
+                    <td>
+                        {% if joueur.image %}
+                        <img src="{{ joueur.image.url }}" alt="Image de {{ joueur.nom }}">
+                        {% else %}
+                        <p>Aucune image</p>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="no-results">Aucun résultat trouvé pour votre recherche.</p>
+        {% endif %}
+
+        <!-- Lien pour revenir à l'accueil -->
+        <a href="{% url 'liste_joueurs' %}" class="back-home">Revenir à la liste complète</a>
+    </div>
+</body>
+</html>

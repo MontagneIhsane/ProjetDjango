@@ -5,39 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Joueurs</title>
     <style>
+        /* Style global */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
             margin: 0;
             padding: 0;
         }
+
+        /* Barre de navigation */
+        .navbar {
+            background-color: #4CAF50;
+            overflow: hidden;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            color: white;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            background-color: #45a049;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background-color: #3e8e41;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .search-bar button {
+            padding: 8px 15px;
+            background-color: #45a049;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .search-bar button:hover {
+            background-color: #3e8e41;
+        }
+
+        /* Conteneur principal */
         .container {
             width: 80%;
-            margin: 0 auto;
+            margin: 20px auto;
             padding: 20px;
         }
+
+        /* Table */
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
+
         th, td {
             padding: 10px;
             text-align: left;
             border: 1px solid #ddd;
         }
+
         th {
             background-color: #4CAF50;
             color: white;
         }
+
         img {
             max-width: 100px;
             height: auto;
         }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
+
+        /* Bouton pour ajouter un joueur */
         .btn {
             background-color: #4CAF50;
             color: white;
@@ -47,6 +110,7 @@
             margin-top: 20px;
             display: inline-block;
         }
+
         .btn:hover {
             background-color: #45a049;
         }
@@ -54,48 +118,54 @@
 </head>
 <body>
 
-<div class="container">
-    <h1>Liste des Joueurs</h1>
+    <!-- Barre de navigation -->
+    <div class="navbar">
+        <h1>Liste des Joueurs</h1>
+        <div class="search-bar">
+            <form method="get" action="{% url 'search_joueurs' %}">
+                <input type="text" name="q" placeholder="Rechercher par nom, poste ou équipe" value="{{ query }}">
+                <button type="submit">Rechercher</button>
+            </form>
+        </div>
+        <a href="{% url 'register' %}">Register</a>
+    </div>
 
-    <!-- Table des joueurs -->
-    <table>
-        <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Nom</th>
-                <th>Image</th>
-                <th>Date de Naissance</th>
-                <th>Poste</th>
-                <th>Équipe</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for joueur in joueurs %}
-            <tr>
-                <td>{{ joueur.titre }}</td>
-                <td>{{ joueur.nom }}</td>
-                <td>
-                    {% if joueur.image %}
-                        <img src="{{ joueur.image.url }}" alt="Image de {{ joueur.nom }}">
-                    {% else %}
-                        <p>Aucune image</p>
-                    {% endif %}
-                </td>
-                <td>{{ joueur.date_naissance }}</td>
-                <td>{{ joueur.poste }}</td>
-                <td>{{ joueur.equipe }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="6">Aucun joueur trouvé.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <!-- Bouton pour ajouter un joueur -->
-    <a href="{% url 'admin:carte_carte_add' %}" class="btn">Ajouter un joueur</a>
-</div>
+    <!-- Contenu principal -->
+    <div class="container">
+        <!-- Table des joueurs -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Image</th>
+                    <th>Date de Naissance</th>
+                    <th>Poste</th>
+                    <th>Équipe</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for joueur in joueurs %}
+                <tr>
+                    <td>{{ joueur.nom }}</td>
+                    <td>
+                        {% if joueur.image %}
+                            <img src="{{ joueur.image.url }}" alt="Image de {{ joueur.nom }}">
+                        {% else %}
+                            <p>Aucune image</p>
+                        {% endif %}
+                    </td>
+                    <td>{{ joueur.date_naissance }}</td>
+                    <td>{{ joueur.poste }}</td>
+                    <td>{{ joueur.equipe }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">Aucun joueur trouvé.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 </body>
 </html>
