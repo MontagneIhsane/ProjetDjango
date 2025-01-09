@@ -5,33 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Résultats de la recherche</title>
     <style>
-        /* Style de base pour le corps */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9; /* Arrière-plan doux */
+    background-color: #f4f4f9; 
     margin: 0;
     padding: 0;
-    color: #333; /* Texte sombre pour le contraste */
+    color: #333; 
 }
 
-/* Conteneur principal */
 .container {
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
-    background: #fff; /* Fond blanc */
+    background: #fff; 
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre douce */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
-/* Titre de la page */
+
 h1 {
     text-align: center;
-    color: #4CAF50; /* Vert doux */
+    color: #4CAF50; 
     margin-bottom: 20px;
 }
 
-/* Style du formulaire de recherche */
+
 form {
     display: flex;
     justify-content: center;
@@ -61,7 +59,7 @@ form input[type="submit"]:hover {
     background-color: #45a049;
 }
 
-/* Table des résultats */
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -75,7 +73,7 @@ th, td {
 }
 
 th {
-    background-color: #4CAF50; /* Couleur de l'en-tête */
+    background-color: #4CAF50; 
     color: white;
 }
 
@@ -85,7 +83,7 @@ td img {
     border-radius: 5px;
 }
 
-/* Message si aucun résultat n'est trouvé */
+
 .no-results {
     text-align: center;
     font-size: 18px;
@@ -93,7 +91,7 @@ td img {
     margin-top: 20px;
 }
 
-/* Lien pour revenir à l'accueil */
+
 .back-home {
     display: block;
     margin-top: 20px;
@@ -114,13 +112,11 @@ td img {
     <div class="container">
         <h1>Résultats de Recherche</h1>
 
-        <!-- Formulaire de recherche -->
         <form method="GET" action="{% url 'search_joueurs' %}">
             <input type="text" name="q" placeholder="Recherchez un joueur..." value="{{ query }}">
             <input type="submit" value="Rechercher">
         </form>
 
-        <!-- Affichage des résultats -->
         {% if joueurs %}
         <table>
             <thead>

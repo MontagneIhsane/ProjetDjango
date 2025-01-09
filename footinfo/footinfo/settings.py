@@ -125,5 +125,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 import os
 
-MEDIA_URL = '/media/'  # URL pour accéder aux fichiers média
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Chemin pour stocker les fichiers média
+MEDIA_URL = '/media/' 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  

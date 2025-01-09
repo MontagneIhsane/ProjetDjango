@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.db.models import Q 
-from .models import Carte, Note
+from .models import Carte
 
 def liste_joueurs(request):
     carte = Carte.objects.all()
@@ -14,24 +14,23 @@ def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save()  # Crée l'utilisateur
-            login(request, user)  # Connecte l'utilisateur automatiquement après l'inscription
-            return redirect('liste_joueurs')  # Redirige vers la page souhaitée
+            user = form.save()
+            login(request, user)  
+            return redirect('liste_joueurs')  
     else:
         form = UserRegistrationForm()
 
     return render(request, 'register/register.html', {'form': form})
 
 def search_joueurs(request):
-    query = request.GET.get('q', '')  # Récupérer la requête de recherche (vide par défaut)
+    query = request.GET.get('q', '')  
 
-    # Vérifier si une requête de recherche a été fournie
     if query:
         joueurs = Carte.objects.filter(
-            Q(nom__icontains=query) | Q(poste__icontains=query)  # Recherche par nom ou par poste
+            Q(nom__icontains=query) | Q(poste__icontains=query)  
         )
     else:
-        joueurs = Carte.objects.all()  # Afficher tous les joueurs par défaut
+        joueurs = Carte.objects.all()  
 
     return render(request, 'search/result.html', {'joueurs': joueurs, 'query': query})
 
